@@ -47,6 +47,21 @@ def generate_equipment_data(equipment_type):
             "temperature_celsius": random.uniform(18, 24),
             "humidity_percent": random.uniform(40, 60),
             "power_usage_kwh": random.uniform(2, 4),
+            "operating_mode": random.choice(["heating", "cooling"]),
+        }
+    elif equipment_type == "LightingSystem":
+        data = {
+            "brightness_level": random.uniform(0, 100),
+            "power_usage_kwh": random.uniform(.05, 1.5),
+            "payment_method": random.choice(["on", "off"]),
+        }
+    elif equipment_type == "AutomatedCheckout":
+        data = {
+            "transaction_id": f"txn_{random.randint(1000, 9999)}",
+            "items_scanned": random.uniform(1, 10),
+            "total_amount_usd": random.uniform(10, 500),
+            "payment_method": random.choice(["credit_card", "cash", "mobile_payment"]),
+            "errors": random.uniform(0, 5),
         }
     else:
         # General data for other equipment types (could be extended as needed)
@@ -78,5 +93,8 @@ if __name__ == "__main__":
         write_data_to_influxdb("POS", "pos_data", timestamp)
         write_data_to_influxdb("SmartShelf", "smart_shelf_data", timestamp)
         write_data_to_influxdb("HVAC", "hvac_data", timestamp)
+        write_data_to_influxdb("LightingSystem", "lighting_system_data", timestamp)
+        write_data_to_influxdb("AutomatedCheckout", "automated_checkout_data", timestamp)
         
         time.sleep(60)
+        
