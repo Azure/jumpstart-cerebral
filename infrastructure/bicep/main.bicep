@@ -111,3 +111,11 @@ module acr 'kubernetes/acr.bicep' = {
     location: location
   }
 }
+
+module ai 'ai/ai.bicep' = {
+  name: 'aiDeployment'
+  params:{
+    location: location
+    
+  }
+}
