@@ -49,7 +49,7 @@ export const SideMenu: React.FC<NavDrawerProps> = () => {
           <NavItem icon={<Home />} value="1">
             Overview
           </NavItem>
-          <NavSectionHeader>Donut</NavSectionHeader>
+          <NavSectionHeader>Category</NavSectionHeader>
           <NavItem icon={<Announcements />} value="2">
             Announcements
           </NavItem>
