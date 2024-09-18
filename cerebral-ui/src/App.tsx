@@ -1,9 +1,12 @@
-import { FluentProvider, webLightTheme } from "@fluentui/react-components";
+import { FluentProvider, webLightTheme, Text } from "@fluentui/react-components";
 import * as React from "react";
 import SideMenu from "./components/SideMenu";
 import Header from "./components/Header";
 import { IStackProps, Stack } from "@fluentui/react";
 import { Default as BreadCrumbs } from './components/BreadCrumbs';
+import { SingleSelect as DataGrid } from './components/DataGrid';
+import MessageBar from "./components/MessageBar";
+import Toolbar from "./components/Toolbar";
 
 const Main = (props: IStackProps) => (
   <Stack
@@ -20,7 +23,15 @@ export const App: React.FunctionComponent = () => {
       <Header />
       <Main>
         <SideMenu />
-        <BreadCrumbs />
+        <Stack>
+          <BreadCrumbs />
+          <Stack horizontal horizontalAlign="start">
+            <Text size={500}>Applications</Text>
+          </Stack>
+          <MessageBar />
+          <Toolbar />
+          <DataGrid />
+        </Stack>
       </Main>
       
     </FluentProvider>
