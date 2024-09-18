@@ -7,6 +7,7 @@
     "@fluentui/react-components": "^9.54.15",
     "@fluentui/react-docsite-components": "^8.13.120",
     "@fluentui/react-nav-preview": "^0.7.6",
+    "@fluentui/react-search-preview": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",

@@ -19,7 +19,7 @@ export const App: React.FunctionComponent = () => {
       <Header />
       <Main>
         <SideMenu />
-        <div>I did it!</div>
+        
       </Main>
       
     </FluentProvider>

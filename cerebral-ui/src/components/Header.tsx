@@ -1,5 +1,6 @@
 import { Stack, IStackProps, ITheme, IThemeRules, DefaultPalette } from "@fluentui/react";
 import { Text } from "@fluentui/react-components";
+import { SearchBox } from "@fluentui/react-search-preview";
 
 export interface IHeaderProps {
     themeRules?: IThemeRules;
@@ -28,7 +29,7 @@ const Header: React.FC = () => {
           <Text size={500}>MegaMart</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center">
-          <Text size={500}>Search</Text>
+            <SearchBox defaultValue="Hello, World!" />
         </Stack>
         <Stack horizontal horizontalAlign="center">
           <Text size={500}>Profile</Text>
