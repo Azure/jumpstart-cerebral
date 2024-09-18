@@ -1,3 +1,7 @@
+@maxLength(5)
+@description('Random GUID')
+param namingGuid string = toLower(substring(newGuid(), 0, 5))
+
 @description('RSA public key used for securing SSH access to ArcBox resources. This parameter is only needed when deploying the DataOps or DevOps flavors.')
 @secure()
 param sshRSAPublicKey string = ''
@@ -36,6 +40,11 @@ param deployBastion bool = false
   'Developer'
 ])
 param bastionSku string = 'Basic'
+
+@minLength(5)
+@maxLength(50)
+@description('Name of the Azure Container Registry')
+param acrName string = 'crbrlacr${namingGuid}'
 
 var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/CerebralHackathon/${githubBranch}/'
 var k3sArcClusterName = '${namingPrefix}-K3s-${guid}'
@@ -92,5 +101,13 @@ module mgmtArtifactsAndPolicyDeployment 'mgmt/mgmtArtifacts.bicep' = {
     location: location
     resourceTags: resourceTags
     namingPrefix: namingPrefix
+  }
+}
+
+module acr 'kubernetes/acr.bicep' = {
+  name: 'acrDeployment'
+  params: {
+    acrName: acrName
+    location: location
   }
 }
