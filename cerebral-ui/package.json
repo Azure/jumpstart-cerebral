@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "@fluentui/react": "^8.120.9",
+    "@fluentui/react-components": "^9.54.15",
+    "@fluentui/react-docsite-components": "^8.13.120",
+    "@fluentui/react-nav-preview": "^0.7.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^28.1.8",
     "@types/node": "^14.18.63",
-    "@types/react": "^17.0.82",
     "@types/react-dom": "^17.0.25",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -40,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.7"
   }
 }
