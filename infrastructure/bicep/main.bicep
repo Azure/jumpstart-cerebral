@@ -25,7 +25,7 @@ param namingPrefix string = 'Crbrl'
 param logAnalyticsWorkspaceName string
 
 @description('Target GitHub account')
-param githubAccount string = 'dkirby-ms'
+param githubAccount string = 'Azure'
 
 @description('Target GitHub branch')
 param githubBranch string = 'main'
@@ -46,7 +46,7 @@ param bastionSku string = 'Basic'
 @description('Name of the Azure Container Registry')
 param acrName string = 'crbrlacr${namingGuid}'
 
-var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/CerebralHackathon/${githubBranch}/'
+var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/jumpstart-cerebral/${githubBranch}/'
 var k3sArcClusterName = '${namingPrefix}-K3s-${guid}'
 var k3sClusterNodesCount = 3 // Number of nodes to deploy in the K3s cluster
 
