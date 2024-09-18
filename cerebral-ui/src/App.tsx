@@ -3,6 +3,7 @@ import * as React from "react";
 import SideMenu from "./components/SideMenu";
 import Header from "./components/Header";
 import { IStackProps, Stack } from "@fluentui/react";
+import { Default as BreadCrumbs } from './components/BreadCrumbs';
 
 const Main = (props: IStackProps) => (
   <Stack
@@ -19,7 +20,7 @@ export const App: React.FunctionComponent = () => {
       <Header />
       <Main>
         <SideMenu />
-        
+        <BreadCrumbs />
       </Main>
       
     </FluentProvider>
