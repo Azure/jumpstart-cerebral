@@ -23,7 +23,7 @@ export interface IHeaderProps {
 
 const Header: React.FC = () => {
     return(
-    <Stack horizontal enableScopedSelectors horizontalAlign="space-between" verticalAlign="center" grow={0} styles={headerStackStyles} color="grey">
+    <Stack horizontal horizontalAlign="space-between" verticalAlign="center" grow={0} styles={headerStackStyles} color="grey">
         <Stack horizontal horizontalAlign="start">
           <Text size={500}>MegaMart</Text>
         </Stack>
