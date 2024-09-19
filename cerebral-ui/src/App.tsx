@@ -1,5 +1,6 @@
 import { FluentProvider, webLightTheme, Text } from "@fluentui/react-components";
-import * as React from "react";
+//import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import SideMenu from "./components/SideMenu";
 import Header from "./components/Header";
 import { IStackProps, Stack } from "@fluentui/react";
@@ -17,21 +18,14 @@ const Main = (props: IStackProps) => (
   />
 );
 
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-
-
 export const App: React.FunctionComponent = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch('https://cors-anywhere.herokuapp.com/http://74.249.31.17:5003/api/applications')
+      .then(response => response.json())
+      .then(json => setData(json))
+      .catch(error => console.error(error));
+  }, []);
   return (
     <FluentProvider theme={webLightTheme}>
       <Header />
@@ -45,6 +39,14 @@ export const App: React.FunctionComponent = () => {
           <MessageBar />
           <Toolbar />
           <DataGrid />
+          <div>
+          {data.map(item => (
+            <div className="post" key={item['application_name']}>
+            <h3>{item['configured_status']}</h3>
+            <p>{item['configured_version']}</p>
+          </div>
+          ))}
+        </div>
         </Stack>
       </Main>
       
