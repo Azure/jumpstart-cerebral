@@ -1,6 +1,6 @@
 # customLocationRPOID=$(az ad sp list --filter "displayname eq 'Custom Locations RP'" --query "[?appDisplayName=='Custom Locations RP'].id" -o tsv) # needs to be run by account with Directory.Read perms on Entra tenant
 customLocationRPOID="d7c8af5d-5320-435c-8d61-88d4cc0f345d" # for Azure Stack Infra Entra tenant
-resourceGroup="Cerebral"
+resourceGroup="JumpstartCerebral"
 arcClusterName=$(az connectedk8s list -g Cerebral --query [].name -o tsv)
 kvId=$(az keyvault list --resource-group $resourceGroup --query "[].id" -o tsv)
 #oid=$()

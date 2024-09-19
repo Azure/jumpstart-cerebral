@@ -31,7 +31,7 @@ param githubAccount string = 'Azure'
 param githubBranch string = 'main'
 
 @description('Choice to deploy Bastion to connect to the client VM')
-param deployBastion bool = false
+param deployBastion bool = true
 
 @description('Bastion host Sku name. The Developer SKU is currently supported in a limited number of regions: https://learn.microsoft.com/azure/bastion/quickstart-developer-sku')
 @allowed([

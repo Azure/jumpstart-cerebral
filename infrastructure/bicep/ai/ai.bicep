@@ -25,5 +25,6 @@ resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
       defaultAction: 'Deny'
     }
     disableLocalAuth: true
+    restore: false
   }
 }
