@@ -1,4 +1,5 @@
-
+customLocationRPOID="51dfe1e8-70c6-4de5-a08e-e18aff23d815"
+resourceGroup="Cerebral"
 
 az config set extension.use_dynamic_install=yes_without_prompt
 
