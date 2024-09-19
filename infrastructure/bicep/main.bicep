@@ -48,8 +48,6 @@ param acrName string = 'crbrlacr${namingGuid}'
 
 var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/jumpstart-cerebral/${githubBranch}/'
 var k3sArcClusterName = '${namingPrefix}-K3s-${guid}'
-var k3sClusterNodesCount = 3 // Number of nodes to deploy in the K3s cluster
-
 
 module ubuntuRancherK3sDeployment 'kubernetes/ubuntuRancher.bicep' = {
   name: 'ubuntuRancherK3sDeployment'
