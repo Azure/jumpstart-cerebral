@@ -5,8 +5,11 @@ import {
   CopilotMessage,
   CopilotProvider,
   UserMessage,
+  PromptStarter
 } from '@fluentui-copilot/react-copilot';
 import {
+  Avatar,
+  Body1,
   shorthands,
   tokens,
   makeStyles,
@@ -50,8 +53,39 @@ const Chat: React.FC<ChatProps> = ({
       return <UserMessage>{message.content as string}</UserMessage>;
 
     const isLoadingAssistantMessage = index === messages.length - 2;
-
+    //const { prompts, onPromptSelected } = props;
     return (
+    <Stack>
+          <CopilotMessage
+                  progress={isLoadingAssistantMessage ? { value: undefined } : undefined}
+                  isLoading={isLoadingAssistantMessage}
+                  defaultFocused
+      // avatar={
+      //   <Avatar
+      //     size={24}
+      //     image={{
+      //       src: "https://res-2-sdf.cdn.office.net/files/fabric-cdn-prod_20240411.001/assets/brand-icons/product/svg/copilot_24x1.svg",
+      //     }}
+      //   />
+      // }
+      // content={{ style: { gap: "8px" } }}
+      // name="Copilot"
+    >
+      <Body1>Hi Kat,</Body1>
+      <Body1>
+        Ready to explore? Select one of the suggestions below to get started...
+      </Body1>
+      {/* {prompts.map((prompt, i) => (
+        <PromptStarter
+          key={`prompt-${i}`}
+          icon={prompt.icon}
+          category={prompt.category}
+          prompt={<Body1>{prompt.prompt}</Body1>}
+          badge={prompt.badge}
+          onClick={() => onPromptSelected?.(prompt)}
+        />
+      ))} */}
+    </CopilotMessage>
       <CopilotMessage
         progress={isLoadingAssistantMessage ? { value: undefined } : undefined}
         isLoading={isLoadingAssistantMessage}
@@ -60,6 +94,8 @@ const Chat: React.FC<ChatProps> = ({
          <div dangerouslySetInnerHTML={{ __html: message.content as string }} />
         {disclaimer}
       </CopilotMessage>
+      </Stack>      
+
     );
   });
 
