@@ -16,7 +16,7 @@ const path = "https://www.bing.com/";
 
 export const Default = () => {
   return (
-    <Breadcrumb aria-label="Breadcrumb default example">
+    <Breadcrumb>
       <BreadcrumbItem>
         <BreadcrumbButton href={path}>Home</BreadcrumbButton>
       </BreadcrumbItem>

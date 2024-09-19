@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  FolderRegular,
-  EditRegular,
-  OpenRegular,
-  DocumentRegular,
-  PeopleRegular,
-  DocumentPdfRegular,
-  VideoRegular,
-} from "@fluentui/react-icons";
-import {
-  PresenceBadgeStatus,
-  Avatar,
   DataGridBody,
   DataGridRow,
   DataGrid,
@@ -161,11 +150,13 @@ export const SingleSelect = () => {
   }, []);
   return (
     <DataGrid
-      items={dataItems}
+      items={data}
       columns={columns}
       selectionMode="single"
       defaultSelectedItems={defaultSelectedItems}
-      style={{ minWidth: "550px" }}
+      style={{ width: "87vw" }}
+      sortable
+      sortState={ {sortColumn: "applicationName", sortDirection: "ascending"} }
     >
       <DataGridHeader>
         <DataGridRow>

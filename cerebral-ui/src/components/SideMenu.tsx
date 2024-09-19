@@ -41,7 +41,7 @@ export const SideMenu: React.FC<NavDrawerProps> = () => {
         open={true}
         type="inline"
         size="medium"
-        style={{ height: "100vh" }}
+        style={{ height: "100vh"}}
       >
         <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
 

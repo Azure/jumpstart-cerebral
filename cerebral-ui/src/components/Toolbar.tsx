@@ -1,47 +1,46 @@
-import { Stack, IStackProps, ITheme, IThemeRules, DefaultPalette } from "@fluentui/react";
-import { Button, Text } from "@fluentui/react-components";
+import { ICommandBarItemProps, CommandBar } from "@fluentui/react";
 
-export interface IHeaderProps {
-    themeRules?: IThemeRules;
-  }
-  
-  export interface IHeaderState {
-    showPanel: boolean;
-    jsonTheme: string;
-    powershellTheme: string;
-    themeAsCode: any;
-  }
-  
-  const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
-    root: {
-      backgroundColor: DefaultPalette.white,
-      minHeight: 47,
-      padding: '0 32px',
-      boxShadow: theme.effects.elevation16,
+const Toolbar = () => {
+
+  const _items: ICommandBarItemProps[] = [
+    {
+      key: 'newItem',
+      text: 'Configure application',
+      cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
+      iconProps: { iconName: 'Add' },
     },
-  });
-
-const Toolbar: React.FC = () => {
-    return(
-    <Stack horizontal horizontalAlign="space-between" verticalAlign="center" grow={0} styles={headerStackStyles} color="grey">
-        <Stack horizontal horizontalAlign="start">
-            <Button>+ Configure Application</Button>
-        </Stack>
-        <Stack horizontal horizontalAlign="start">
-            <Button>Refresh</Button>
-        </Stack>
-        <Stack horizontal horizontalAlign="center">
-            <Button>Deploy</Button>
-        </Stack>
-        <Stack horizontal horizontalAlign="center">
-            <Button>Delete</Button>
-        </Stack>
-        <Stack horizontal horizontalAlign="center">
-            <Button>Summary</Button>
-        </Stack>
-
-      </Stack>
-    );
+    {
+      key: 'upload',
+      text: 'Refresh',
+      iconProps: { iconName: 'Refresh' },
+      href: 'https://developer.microsoft.com/en-us/fluentui',
+    },
+    {
+      key: 'share',
+      text: 'Deploy',
+      iconProps: { iconName: 'Deploy' },
+      onClick: () => console.log('Share'),
+    },
+    {
+      key: 'download',
+      text: 'Delete',
+      iconProps: { iconName: 'Delete' },
+      onClick: () => console.log('Download'),
+    },
+    {
+      key: 'copilot',
+      text: 'Summary',
+      iconProps: { iconName: 'Robot' },
+      onClick: () => console.log('Download'),
+    },
+  ];
+  
+  return (
+      <CommandBar
+        ariaLabel="Use left and right arrow keys to navigate between commands"
+        items={_items}
+      />
+  );
 };
 
 export default Toolbar;
