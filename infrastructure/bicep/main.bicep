@@ -1,6 +1,6 @@
 @maxLength(5)
 @description('Random GUID')
-param namingGuid string = toLower(substring(newGuid(), 5, 5))
+param namingGuid string = toLower(substring(newGuid(), 4, 5))
 
 @description('RSA public key used for securing SSH access to ArcBox resources. This parameter is only needed when deploying the DataOps or DevOps flavors.')
 @secure()
