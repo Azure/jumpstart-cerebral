@@ -150,7 +150,7 @@ export const SingleSelect = () => {
   }, []);
   return (
     <DataGrid
-      items={data}
+      items={dataItems}
       columns={columns}
       selectionMode="single"
       defaultSelectedItems={defaultSelectedItems}

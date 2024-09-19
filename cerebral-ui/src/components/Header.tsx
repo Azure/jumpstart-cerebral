@@ -1,38 +1,38 @@
-import { Stack, IStackProps, ITheme, IThemeRules, DefaultPalette } from "@fluentui/react";
-import { Text } from "@fluentui/react-components";
+import { Stack, IStackProps, ITheme, IThemeRules, DefaultPalette, IconButton, IIconProps } from "@fluentui/react";
+import { Avatar, Text } from "@fluentui/react-components";
 import { SearchBox } from "@fluentui/react-search-preview";
 
 export interface IHeaderProps {
     themeRules?: IThemeRules;
   }
   
-  export interface IHeaderState {
-    showPanel: boolean;
-    jsonTheme: string;
-    powershellTheme: string;
-    themeAsCode: any;
-  }
-  
-  const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
-    root: {
-      backgroundColor: DefaultPalette.themeTertiary,
-      minHeight: 47,
-      padding: '0 32px',
-      boxShadow: theme.effects.elevation16,
-    },
-  });
+export interface IHeaderState {
+showPanel: boolean;
+jsonTheme: string;
+powershellTheme: string;
+themeAsCode: any;
+}
+
+const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
+root: {
+    minHeight: 47,
+    padding: '0 32px',
+    boxShadow: theme.effects.elevation8,
+},
+});
+
+const addIcon: IIconProps = { iconName: 'MailAlert' };
 
 const Header: React.FC = () => {
     return(
     <Stack horizontal horizontalAlign="space-between" verticalAlign="center" grow={0} styles={headerStackStyles} color="grey">
         <Stack horizontal horizontalAlign="start">
-          <Text size={500}>Celebral</Text>
+          <Text size={500}>Cerebral</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center">
-            <SearchBox defaultValue="Hello, World!" />
-        </Stack>
-        <Stack horizontal horizontalAlign="center">
-          <Text size={500}>Profile</Text>
+            <IconButton iconProps={addIcon} aria-label="Emoji" />
+
+            <Avatar name="Zein Chad" />
         </Stack>
       </Stack>
     );
