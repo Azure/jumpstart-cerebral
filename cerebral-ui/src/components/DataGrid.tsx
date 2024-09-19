@@ -154,7 +154,7 @@ export const SingleSelect = () => {
       columns={columns}
       selectionMode="single"
       defaultSelectedItems={defaultSelectedItems}
-      style={{ width: "87vw" }}
+      style={{ width: "63vw" }}
       sortable
       sortState={ {sortColumn: "applicationName", sortDirection: "ascending"} }
     >

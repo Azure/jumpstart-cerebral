@@ -8,6 +8,8 @@ import { Default as BreadCrumbs } from './components/BreadCrumbs';
 import { SingleSelect as DataGrid } from './components/DataGrid';
 import Toolbar from "./components/Toolbar";
 import Message from "./components/Message";
+import { CopilotProvider, OutputCard } from "@fluentui-copilot/react-copilot";
+import Copilot from "./components/Copilot";
 
 const Main = (props: IStackProps) => (
   <Stack
@@ -26,20 +28,26 @@ const themedMediumStackTokens: IStackTokens = {
 export const App: React.FunctionComponent = () => {
   return (
     <FluentProvider theme={webLightTheme}>
-      <Header />
-      <Main>
-        <SideMenu />
-        <Stack tokens={themedMediumStackTokens}>
-          <BreadCrumbs />
-          <Stack horizontal horizontalAlign="start">
-            <Text size={700}>Applications</Text>
+      <CopilotProvider
+        mode="sidecar"
+      >
+        <Header />
+        <Main>
+          <SideMenu />
+          <Stack tokens={themedMediumStackTokens}>
+            <BreadCrumbs />
+            <Stack horizontal horizontalAlign="start">
+              <Text size={700}>Applications</Text>
+            </Stack>
+            <Message />
+            <Toolbar />
+            <DataGrid />
           </Stack>
-          <Message />
-          <Toolbar />
-          <DataGrid />
-        </Stack>
-      </Main>
-      
+          <Copilot
+              isOpen
+            />
+        </Main>
+      </CopilotProvider>
     </FluentProvider>
   );
 };
