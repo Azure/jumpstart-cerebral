@@ -12,7 +12,7 @@ import { Default as BreadCrumbs } from "./components/BreadCrumbs";
 import { SingleSelect as DataGrid } from "./components/DataGrid";
 import Toolbar from "./components/Toolbar";
 import Message from "./components/Message";
-import { CopilotProvider, OutputCard } from "@fluentui-copilot/react-copilot";
+import { CopilotProvider } from "@fluentui-copilot/react-copilot";
 import Copilot from "./components/Copilot";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ const themedMediumStackTokens: IStackTokens = {
 export const App: React.FunctionComponent = () => {
   const [copilotOpen, setCopilotOpen] = useState(false);
 
-  const handleCopilotOpen = () => {
+  const handleCopilotWindowState = () => {
     const isOpen = !copilotOpen;
     setCopilotOpen(isOpen);
   };
@@ -47,12 +47,12 @@ export const App: React.FunctionComponent = () => {
               <Stack horizontal horizontalAlign="start">
                 <Text size={700}>Applications</Text>
               </Stack>
-              <Message onCopilotOpen={handleCopilotOpen} />
+              <Message onCopilotOpen={handleCopilotWindowState} />
               <Toolbar />
               <DataGrid />
             </Stack>
           </Stack.Item>
-          <Copilot isOpen={copilotOpen} />
+          <Copilot isOpen={copilotOpen} onCopilotClose={handleCopilotWindowState} />
         </Main>
       </CopilotProvider>
     </FluentProvider>
