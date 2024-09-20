@@ -46,14 +46,6 @@ type DataItem = {
 
 
 const dataItems: DataItem[] = [
-  {
-    applicationName: { label: "FFR1 (1)" },
-    configuredStatus: { label: "Pending approval" },
-    configuredVersion: { label: "1.0.1"},
-    deployedStatus: { label: "Not yet deployed"},
-    deployedVersion: { label: "1.0.1"},
-    line: { label: "FRI2"},
-  },  
 ];
 
 const columns: TableColumnDefinition<DataItem>[] = [
@@ -143,11 +135,26 @@ export const SingleSelect = () => {
   const defaultSelectedItems = React.useMemo(() => new Set([1]), []);
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch('https://cors-anywhere.herokuapp.com/http://74.249.31.17:5003/api/applications')
+    fetch('http://74.249.31.17:5003/Cerebral/api/get_applications')
       .then(response => response.json())
       .then(json => setData(json))
       .catch(error => console.error(error));
   }, []);
+  data.forEach(
+    function(d){
+      var newDataItem: DataItem = {
+        applicationName: { label: d["application_name"] },
+        configuredStatus: { label: d["configured_status"] },
+        configuredVersion: { label: d["configured_version"]},
+        deployedStatus: { label: d["deployed_status"]},
+        deployedVersion: { label: "1.0.1"},
+        line: { label: d["line"]},        
+      };
+      dataItems.push(newDataItem);
+     }
+  )  
+  console.log(dataItems);
+
   return (
     <DataGrid
       items={dataItems}
