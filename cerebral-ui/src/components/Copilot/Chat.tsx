@@ -1,12 +1,14 @@
 import React from 'react';
 import {
   AiGeneratedDisclaimer,
-  CopilotChat,
-  CopilotMessage,
   CopilotProvider,
   UserMessage,
   PromptStarter
 } from '@fluentui-copilot/react-copilot';
+import {
+    CopilotChat,
+    CopilotMessageV2 as CopilotMessage,
+  } from "@fluentui-copilot/react-copilot-chat";
 import {
   Avatar,
   Body1,
@@ -58,18 +60,17 @@ const Chat: React.FC<ChatProps> = ({
     <Stack>
           <CopilotMessage
                   progress={isLoadingAssistantMessage ? { value: undefined } : undefined}
-                  isLoading={isLoadingAssistantMessage}
+                  loadingState="none"
                   defaultFocused
-      // avatar={
-      //   <Avatar
-      //     size={24}
-      //     image={{
-      //       src: "https://res-2-sdf.cdn.office.net/files/fabric-cdn-prod_20240411.001/assets/brand-icons/product/svg/copilot_24x1.svg",
-      //     }}
-      //   />
-      // }
-      // content={{ style: { gap: "8px" } }}
-      // name="Copilot"
+                  name="Copilot"
+                  avatar={
+                    <Avatar
+                      size={24}
+                      image={{
+                        src: "https://res-2-sdf.cdn.office.net/files/fabric-cdn-prod_20240411.001/assets/brand-icons/product/svg/copilot_24x1.svg",
+                      }}
+                    />
+                  }
     >
       <Body1>Hi Kat,</Body1>
       <Body1>
@@ -88,8 +89,17 @@ const Chat: React.FC<ChatProps> = ({
     </CopilotMessage>
       <CopilotMessage
         progress={isLoadingAssistantMessage ? { value: undefined } : undefined}
-        isLoading={isLoadingAssistantMessage}
+        loadingState='none'
         defaultFocused
+        name="Copilot"
+        avatar={
+        <Avatar
+            size={24}
+            image={{
+            src: "https://res-2-sdf.cdn.office.net/files/fabric-cdn-prod_20240411.001/assets/brand-icons/product/svg/copilot_24x1.svg",
+            }}
+        />
+        }
       >
          <div dangerouslySetInnerHTML={{ __html: message.content as string }} />
         {disclaimer}

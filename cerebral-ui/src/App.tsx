@@ -10,6 +10,7 @@ import Toolbar from "./components/Toolbar";
 import Message from "./components/Message";
 import { CopilotProvider, OutputCard } from "@fluentui-copilot/react-copilot";
 import Copilot from "./components/Copilot";
+import { useState } from "react";
 
 const Main = (props: IStackProps) => (
   <Stack
@@ -26,6 +27,8 @@ const themedMediumStackTokens: IStackTokens = {
 };
 
 export const App: React.FunctionComponent = () => {
+  const [copilotOpen, setCopilotOpen] = useState(false);
+  
   return (
     <FluentProvider theme={webLightTheme}>
       <CopilotProvider

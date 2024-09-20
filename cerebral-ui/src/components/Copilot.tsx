@@ -75,7 +75,7 @@ const Copilot: React.FC<CopilotProps> = ({
               </linearGradient>
             </defs>
           </svg>
-          <div >Copilot</div>
+          <div >Cerebral</div>
         </Stack>
       </DrawerHeaderTitle>
     </DrawerHeader>
@@ -84,7 +84,7 @@ const Copilot: React.FC<CopilotProps> = ({
   const drawerBody = (
     <DrawerBody tabIndex={0} role="group" aria-label="Chat">
       <Chat
-              messages={messages}
+            messages={messages}
         />
     </DrawerBody>
   );

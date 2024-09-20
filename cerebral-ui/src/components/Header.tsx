@@ -17,11 +17,12 @@ const headerStackStyles = (p: IStackProps, theme: ITheme) => ({
 root: {
     minHeight: 47,
     padding: '0 32px',
-    boxShadow: theme.effects.elevation8,
+    boxShadow: theme.effects.elevation4,
 },
 });
 
 const addIcon: IIconProps = { iconName: 'MailAlert' };
+const copilotIcon: IIconProps = { iconName: 'Robot' };
 
 const Header: React.FC = () => {
     return(
@@ -31,7 +32,6 @@ const Header: React.FC = () => {
         </Stack>
         <Stack horizontal horizontalAlign="center">
             <IconButton iconProps={addIcon} aria-label="Emoji" />
-
             <Avatar name="Zein Chad" />
         </Stack>
       </Stack>

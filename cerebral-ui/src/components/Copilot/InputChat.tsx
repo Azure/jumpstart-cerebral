@@ -20,7 +20,7 @@ import {
     return (
       <ChatInput
         style={{ width: '100%' }}
-        placeholderValue="I want to..."
+        placeholderValue="Describe what you'd like to do or use / to reference files, people and more"
         showCount
         onSubmit={handleSubmit}
       >
