@@ -4,6 +4,10 @@ import {
   CopilotProvider,
   UserMessage,
   PromptStarter,
+  FeedbackButtons,
+  SensitivityTooltip,
+  SensitivityIcon,
+  Attachment,
 } from "@fluentui-copilot/react-copilot";
 import {
   CopilotChat,
@@ -35,24 +39,67 @@ const useStyles = makeStyles({
 
 interface ChatProps {
   messages: any[];
+  isLoading: boolean;
 }
 
-const Chat: React.FC<ChatProps> = ({ messages }) => {
+const Chat: React.FC<ChatProps> = ({ messages, isLoading }) => {
   const styles = useStyles();
 
-  const disclaimer = (
-    <AiGeneratedDisclaimer
-      style={{ backgroundColor: "transparent", paddingTop: 10 }}
-    >
-      AI-generated content may be incorrectd
-    </AiGeneratedDisclaimer>
+  const [selected, setSelected] = React.useState<
+    "positive" | "negative" | undefined
+  >(undefined);
+  const handlePositiveFeedback = () => {
+    setSelected(selected === "positive" ? undefined : "positive");
+  };
+
+  const handleNegativeFeedback = () => {
+    setSelected(selected === "negative" ? undefined : "negative");
+  };
+
+  const feedback = (
+    <FeedbackButtons
+      selected={selected}
+      positiveFeedbackButton={{ onClick: handlePositiveFeedback }}
+      positiveFeedbackTooltip={{
+        content:
+          selected === "positive" ? "Like, Feedback already provided" : "Like",
+      }}
+      negativeFeedbackButton={{ onClick: handleNegativeFeedback }}
+      negativeFeedbackTooltip={{
+        content:
+          selected === "negative"
+            ? "Dislike, Feedback already provided"
+            : "Dislike",
+      }}
+    />
   );
 
-  const messagesInContainers = messages.slice(1).map((message, index) => {
+  const sensitivity = (
+    <SensitivityTooltip
+      heading="Confidential \\ Market FTE"
+      withBackplate
+      message="Data is classified and protected. Market Full Time Employees (FTE) can edit, reply, forward and print."
+    >
+      <SensitivityIcon fillColor="orange" withLock />
+    </SensitivityTooltip>
+  );
+
+  const openTicket = (
+    <Attachment
+      primaryAction={{ onClick: () => {} }}
+      id="attachment-1"
+    >
+      Open ticket
+    </Attachment>
+  );
+
+  const messagesInContainers = messages.map((message, index) => {
     if (message.role === "user")
       return <UserMessage>{message.content as string}</UserMessage>;
 
-    const isLoadingAssistantMessage = index === messages.length - 2;
+    const isLoadingAssistantMessage = String(message.content).includes("Search");
+    const isOpenTicketMessage = String(message.content).includes("repair ticket");
+    const isLatestMessage = index === messages.length - 1;
 
     return (
       <Stack>
@@ -60,29 +107,7 @@ const Chat: React.FC<ChatProps> = ({ messages }) => {
           progress={
             isLoadingAssistantMessage ? { value: undefined } : undefined
           }
-          loadingState="none"
-          defaultFocused
-          name="Copilot"
-          avatar={
-            <Avatar
-              size={24}
-              image={{
-                src: "https://res-2-sdf.cdn.office.net/files/fabric-cdn-prod_20240411.001/assets/brand-icons/product/svg/copilot_24x1.svg",
-              }}
-            />
-          }
-        >
-          <Body1>Hi Kat,</Body1>
-          <Body1>
-            Ready to explore? Select one of the suggestions below to get
-            started...
-          </Body1>
-        </CopilotMessage>
-        <CopilotMessage
-          progress={
-            isLoadingAssistantMessage ? { value: undefined } : undefined
-          }
-          loadingState="none"
+          loadingState={isLoading && isLoadingAssistantMessage ? "loading" : "none"}
           defaultFocused
           name="Copilot"
           avatar={
@@ -97,7 +122,11 @@ const Chat: React.FC<ChatProps> = ({ messages }) => {
           <div
             dangerouslySetInnerHTML={{ __html: message.content as string }}
           />
-          {disclaimer}
+          <Stack horizontal>
+            {!isLoading && !isLoadingAssistantMessage && sensitivity}
+            {!isLoading && !isLoadingAssistantMessage && feedback}
+            {!isLoading && isOpenTicketMessage && openTicket}
+          </Stack>
         </CopilotMessage>
       </Stack>
     );

@@ -18,6 +18,11 @@ interface CopilotProps {
   onCopilotClose: () => void;
 }
 
+interface ChatCompletionMessageParam {
+  role: string;
+  content: string;
+}
+
 const Copilot: React.FC<CopilotProps> = ({ isOpen, onCopilotClose }) => {
   const restoreFocusSourceAttributes = useRestoreFocusSource();
 
@@ -26,7 +31,55 @@ const Copilot: React.FC<CopilotProps> = ({ isOpen, onCopilotClose }) => {
 
   const handleSubmitQuestion = (text: string) => {
     setIsLoading(true);
-  }
+
+    const promptHistory: ChatCompletionMessageParam[] = [
+      ...messages,
+      { role: "user", content: text },
+    ];
+
+    setMessages([
+      ...promptHistory,
+      { role: "assistant", content: "Searching..." },
+    ]);
+
+    setTimeout(() => {
+      setMessages([
+        ...promptHistory,
+        {
+          role: "assistant",
+          content:
+            "<b>Error type</b><br /> Sensor Malfunction <br /> <b>Description</b><br /> The CSAD sensor has detected multiple errors, leading to inaccurate readings and temperature data loss. <br /> <b>Recommended action</b><br /> <ul><li>Inspect Sensor: Perform a visual inspection for any visible damage or loose connections. Refer to the CSAD Sensor Maintenance Manual, Section 3.2 for detailed inspection procedures.</li> <li>Replace Sensor: If issues persist after calibration, replace the sensor with a new unit.</li></ul> Use CSAD Sensor Replacement Kit (Part No. 65432) and follow the replacement instructions provided in the Service Manual, Appendix B",
+        },
+      ]);
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  const handleSubmitSuggestion = (suggestion: {
+    type: string;
+    value: string;
+  }) => {
+    const promptHistory: ChatCompletionMessageParam[] = [
+      ...messages,
+      { role: "user", content: suggestion.value },
+    ];
+
+    setMessages([...promptHistory, { role: "assistant", content: "Searching..." }]);
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setMessages([
+        ...promptHistory,
+        {
+          role: "assistant",
+          content:
+            "Here is the details of the repair ticket <a href='https://www.example.com'>[HotMelt1008]</a>. Please review the details before creating the ticket.",
+        },
+      ]);
+      setIsLoading(false);
+    }, 2000);
+  };
 
   const drawerHeader = (
     <DrawerHeader>
@@ -154,15 +207,17 @@ const Copilot: React.FC<CopilotProps> = ({ isOpen, onCopilotClose }) => {
 
   const drawerBody = (
     <DrawerBody tabIndex={0} role="group" aria-label="Chat">
-      <Chat messages={messages} />
+      <Chat messages={messages} isLoading={isLoading} />
     </DrawerBody>
   );
 
   const drawerFooter = (
     <DrawerFooter>
-      <InputChat 
+      <InputChat
         onSubmitQuestion={handleSubmitQuestion}
-        disabled={isLoading} />
+        disabled={isLoading}
+        onsubmitSuggestion={handleSubmitSuggestion}
+      />
     </DrawerFooter>
   );
 
