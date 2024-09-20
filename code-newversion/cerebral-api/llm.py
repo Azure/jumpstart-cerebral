@@ -24,6 +24,31 @@ class LLM:
             api_version=self.OPENAI_API_VERSION
         )
 
+    def generate_recommendations(self, question, response, result):
+
+        conversation=[
+            {
+                "role": "system",
+                "content": """
+                I am an agent specialized in technical support for automobile manufacturing, particularly skilled in the maintenance, support, and operation of automotive assembly lines. My role is to interpret user questions with expertise, analyze production data, and provide proactive recommendations to optimize assembly line operations. Give me the Interpretation and response, including data analysis and proactive recommendations separeted in different paragraphs. Instructions:
+                1. Avoid technological terms and explanations that the solution was built with such as InfluxDb, bucket, etc, keep it like an automotive manufacturing plant manager.
+                2. Format should be <h3>Interpretation:</h3>Generated text <h3>Data Analysis:</h3>Generated text <h3>Proactive Recommendations:</h3>Generated text<BR></BR>."""
+                
+            }
+        ]
+
+        conversation.append({"role": "user", "content": f"question: {question} and data received: {result} and row data {response}"})
+
+        response = self.client.chat.completions.create(
+                model=self.CHATGPT_MODEL,
+                messages=conversation
+            )
+        
+        conversation.append({"role": "system", "content": response.choices[0].message.content})
+        print(response.choices[0].message.content)
+
+        return response.choices[0].message.content
+
 
     def classify_question(self, question):
         categories = ["data", "documentation", "general"]

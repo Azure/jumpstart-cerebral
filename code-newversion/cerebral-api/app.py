@@ -216,6 +216,35 @@ class ExecuteQuery(Resource):
         print(result)
 
         return jsonify({'query': query, 'result': result})
+    
+
+# Define the expected input model
+recommendation_model = ns.model('Recommendation', {
+    'question': fields.String(required=True, description='The question to classify'),
+    'response': fields.String(required=True, description='The raw response data'),
+    'result': fields.String(required=True, description='The processed result data')
+})
+
+@ns.route('/api/generate-recommendations')
+class GenerateRecommendations(Resource):
+    @api.doc(responses={200: 'Success', 400: 'Missing required parameters'})
+    @api.expect(recommendation_model)
+    def post(self):
+        """Generate recommendations based on question, response, and result"""
+        if request.content_type != 'application/json':
+            raise BadRequest('Content-Type must be application/json')
+        
+        data = request.get_json(force=True)
+        question = data.get('question')
+        response = data.get('response')
+        result = data.get('result')
+        if not question or not response or not result:
+            return jsonify({'error': 'Missing required parameters'}), 400
+        
+        recommendations = llm.generate_recommendations(question, response, result)
+        return jsonify({'question': question, 'response': response, 'result': result, 'recommendations': recommendations})
+
+#api.add_resource(GenerateRecommendations, '/generate-recommendations')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5003)
