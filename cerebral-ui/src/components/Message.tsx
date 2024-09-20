@@ -13,6 +13,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ onCopilotOpen }) => {
+  const handleClick = () => { onCopilotOpen(); };
   return (
     <MessageBar intent={"error"}>
       <MessageBarBody>
@@ -27,6 +28,7 @@ const Message: React.FC<MessageProps> = ({ onCopilotOpen }) => {
       >
         <Button
           appearance="outline"
+          onClick={() => handleClick()}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"

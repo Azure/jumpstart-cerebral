@@ -138,6 +138,7 @@ export const SingleSelect = () => {
     fetch('http://74.249.31.17:5003/Cerebral/api/get_applications')
       .then(response => response.json())
       .then(json => setData(json))
+      .then()
       .catch(error => console.error(error));
   }, []);
   data.forEach(
