@@ -119,6 +119,219 @@ Follow these steps to set up and use Cerebral in your environment:
 3. **Configure the Frontend**: Deploy the React JS web application and connect it to the backend using the provided APIs.
 4. **Enable Proactive Alerts**: Configure the proactive alert engine to monitor critical business components.
 
+## Pre-requisites
+
+Before deploying Cerebral, several pre-requisites must be fulfilled to ensure a successful installation and operation. The system is designed to run on both virtual machines and physical servers that can handle edge computing tasks effectively.
+
+### Hardware Requirements
+
+1. **Linux-Based System**: Cerebral requires a Linux-based system, specifically a VM or physical machine running **Linux Ubuntu 22.04**. This system will perform as an edge server, handling queries directly from the production line and interfacing with other operational systems.
+
+2. **Resource Specifications**:
+   - **Minimal Resource Deployment**: For deployments using the Language Learning Model (LLM) hosted on Azure, a lighter resource footprint is feasible. A machine with at least **16 GB RAM and 4 CPU cores** should suffice.
+   - **Full Resource Deployment**: For on-premises deployments where the System Lifecycle Management (SLM) is also located on-premises, a more robust system is required. It's recommended to use an Azure VM configured to simulate an edge environment with **32 GB RAM and 8 CPU cores**.
+
+### Software Requirements
+
+- **Azure CLI**: Essential for interacting with Azure services.
+- **K3s**: Lightweight Kubernetes distribution suitable for edge computing environments.
+- **Curl**: Tool to transfer data from or to a server, used during various installation steps.
+
+### Network Requirements
+
+To ensure smooth communication and operation of the Cerebral, specific network configurations are necessary. These configurations cater to the infrastructure's hybrid nature, leveraging both Azure services and on-premises components.
+
+#### Azure Arc for Kubernetes
+
+Cerebral utilizes [Azure Arc for Kubernetes](https://docs.microsoft.com/en-us/azure/azure-arc/kubernetes/overview) to extend Azure management capabilities to Kubernetes clusters anywhere. This integration allows for the management of Kubernetes clusters across on-premises, edge, and multi-cloud environments through Azure's control plane.
+
+#### Control Plane
+
+The control plane of Cerebral, managed through Azure Arc, requires network configurations that adhere to Azure Arc's [networking requirements](https://docs.microsoft.com/en-us/azure/azure-arc/kubernetes/network-requirements). It's crucial to ensure that all necessary ports and endpoints are accessible to facilitate command and control operations seamlessly.
+
+#### Data Plane
+
+For the data plane, which handles the direct processing and movement of operational data:
+- **Port 443 (HTTPS)**: This port is used predominantly to secure data transmission across the network, ensuring encrypted communication for all data exchanges between the edge devices and the centralized data services.
+
+
+## Solution Build Steps
+
+### Step 1 - Building an Ubuntu VM running Azure IoT Operation
+
+1. **Prepare Your Azure Arc-enabled Kubernetes Cluster on Ubuntu:**
+   - Install `curl`:
+     ```bash
+     sudo apt install curl -y
+     ```
+   - Install Azure CLI:
+     ```bash
+     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+     ```
+   - Install Azure IoT Operations extension:
+     ```bash
+     az extension add --upgrade --name azure-iot-ops
+     ```
+   - Install K3S:
+     ```bash
+     curl -sfL https://get.k3s.io | sh –
+     ```
+
+2. **Set Up K3S Configuration:**
+   - Create K3S configuration:
+     ```bash
+     mkdir ~/.kube
+     sudo KUBECONFIG=~/.kube/config:/etc/rancher/k3s/k3s.yaml kubectl config view --flatten > ~/.kube/merged
+     mv ~/.kube/merged ~/.kube/config
+     chmod  0600 ~/.kube/config
+     export KUBECONFIG=~/.kube/config
+     kubectl config use-context default
+     ```
+   - Increase user watch/instance limits:
+     ```bash
+     echo fs.inotify.max_user_instances=8192 | sudo tee -a /etc/sysctl.conf
+     echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+     sudo sysctl -p
+     ```
+   - Increase file descriptor limit:
+     ```bash
+     echo fs.file-max = 100000 | sudo tee -a /etc/sysctl.conf
+     sudo sysctl -p
+     ```
+
+3. **Connect Your Cluster to Azure Arc:**
+   - Login to Azure:
+     ```bash
+     az login
+     ```
+   - Set environment variables:
+     ```bash
+     export SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>
+     export LOCATION=<YOUR_REGION>
+     export RESOURCE_GROUP=<YOUR_RESOURCE_GROUP>
+     export CLUSTER_NAME=<YOUR_CLUSTER_NAME>
+     export KV_NAME=<YOUR_KEY_VAULT_NAME>
+     export INSTANCE_NAME=<YOUR_INSTANCE_NAME>
+     ```
+   - Set Azure subscription context:
+     ```bash
+     az account set -s $SUBSCRIPTION_ID
+     ```
+   - Register required resource providers:
+     ```bash
+     az provider register -n "Microsoft.ExtendedLocation"
+     az provider register -n "Microsoft.Kubernetes"
+     az provider register -n "Microsoft.KubernetesConfiguration"
+     az provider register -n "Microsoft.IoTOperationsOrchestrator"
+     az provider register -n "Microsoft.IoTOperations"
+     az provider register -n "Microsoft.DeviceRegistry"
+     ```
+   - Create a resource group:
+     ```bash
+     az group create --location $LOCATION --resource-group $RESOURCE_GROUP --subscription $SUBSCRIPTION_ID
+     ```
+   - Connect Kubernetes cluster to Azure Arc:
+     ```bash
+     az connectedk8s connect -n $CLUSTER_NAME -l $LOCATION -g $RESOURCE_GROUP --subscription $SUBSCRIPTION_ID
+     ```
+   - Get `objectId` of Microsoft Entra ID application:
+     ```bash
+     export OBJECT_ID=$(az ad sp show --id bc313c14-388c-4e7d-a58e-70017303ee3b --query id -o tsv)
+     ```
+   - Enable custom location support:
+     ```bash
+     az connectedk8s enable-features -n $CLUSTER_NAME -g $RESOURCE_GROUP --custom-locations-oid $OBJECT_ID --features cluster-connect custom-locations
+     ```
+   - Verify cluster readiness for Azure IoT Operations:
+     ```bash
+     az iot ops verify-host
+     ```
+   - Create an Azure Key Vault:
+     ```bash
+     az keyvault create --enable-rbac-authorization false --name $KV_NAME --resource-group $RESOURCE_GROUP
+     ```
+
+
+### Step 2 - Install Cerebral
+
+1. **Deploy Namespace, InfluxDB, Simulator, and Redis:**
+   - Create a folder for Cerebral configuration files:
+     ```bash
+     mkdir cerebral
+     cd cerebral
+     ```
+   - Apply the Cerebral namespace:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/cerebral-ns.yaml
+     ```
+   - Create a directory for persistent InfluxDB data:
+     ```bash
+     sudo mkdir /var/lib/influxdb2
+     sudo chmod 777 /var/lib/influxdb2
+     ```
+   - Deploy InfluxDB:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/influxdb.yaml
+     ```
+   - Configure InfluxDB:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/influxdb-setup.yaml
+     ```
+   - Deploy the data simulator:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/cerebral-simulator.yaml
+     ```
+   - Deploy SQL Server Lite:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/mssql.yaml
+     ```
+   - Configure SQL Server Lite:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/mssql-setup.yaml
+     ```
+   - Validate the implementation:
+     ```bash
+     kubectl get all -n cerebral
+     ```
+   
+
+2. **Access InfluxDB:**
+   - Use a web browser to connect to the Server IP of the InfluxDB service to access its interface, example htttp://<IP Server>:8086. Validate that there is a bucket named `manufacturing` and that it contains a measurement called `assemblyline` with values. To access to Grafana the user is **admin** and the password id **ArcPassword123!!**
+
+      ![Grafana](./resources/images/grafana.png)
+
+
+3. **Install Redis:**
+   - Deploy Redis to store user sessions and conversation history:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/sample_app/cerebral_genai/deployment/redis.yaml
+     ```
+
+4. **Deploy Cerebral Application:**
+   - Create an Azure OpenAI service in your subscription and obtain the key and endpoint for use in the application configuration.
+   - Download the Cerebral application deployment file:
+     ```bash
+     wget https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/cerebral-api.yaml
+     ```
+   - Edit the file with your Azure OpenAI instance details:
+     ```bash
+     nano cerebral-api.yaml
+     ```
+   - Apply the changes and deploy the application:
+     ```bash
+     kubectl apply -f cerebral-api.yaml
+     ```
+
+5. **Verify All Components:**
+   - Ensure that all components are functioning correctly by checking the pods and services.
+
+
+### Note on Deployment Types
+
+- **Cloud-Based LLM Deployment**: This setup requires minimal resources at the Edge and leverages Azure's robust cloud capabilities for processing and data handling, suitable for scenarios with adequate network connectivity and less stringent data locality requirements.
+- **On-Premises SLM Deployment**: This approach is ideal for environments where the integration with on premises data is required and is requires to have the SLM at the edge. It demands more substantial resources but provides enhanced control over data and processes.
+
+
 ## Conclusion
 
 The Cerebral solution is built to be adaptive, efficient, and scalable, making it an indispensable tool across multiple industries. By leveraging the power of Generative AI, real-time data processing, and seamless integration with cloud and edge services, Cerebral offers a robust platform for enhancing operational workflows and decision-making processes.
