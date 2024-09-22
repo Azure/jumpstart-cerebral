@@ -8,7 +8,8 @@ The Cerebral Hackathon 2024 team has laid the foundation for the next generation
 
 In the demo, Cerebral serves as the central intelligence engine that interacts with different personas, showcasing how it assists in various scenarios:
 
-[![Hack2024 - Cerebral.mp4]](https://microsoft-my.sharepoint-df.com/personal/likamrat_microsoft_com/_layouts/15/embed.aspx?UniqueId=d0c79d5a-2d25-4116-8293-44d36a68f3b4&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create)
+[![Hack2024 - Cerebral.mp4](./img/video.png)](https://microsoft-my.sharepoint-df.com/personal/likamrat_microsoft_com/_layouts/15/embed.aspx?UniqueId=d0c79d5a-2d25-4116-8293-44d36a68f3b4&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create)
+
 
 - **Retail (Lisa)**: As a store manager, Lisa relies on Cerebral to monitor inventory levels. When Cerebral detects low stock for certain products, it proactively alerts Lisa and helps her pre-fill the order form with the required quantities. This feature saves Lisa time and ensures that the store is always well-stocked, preventing potential sales losses due to out-of-stock items.
 
@@ -21,12 +22,13 @@ By integrating seamlessly across different roles, Cerebral demonstrates its mult
 ### Key Objectives
 The work done during the hackathon has focused on the following pillars:
 
-- **Expand Cerebral for Multi-Industry and Multi-Role Use:** Make Cerebral capable of supporting various industries and roles, adapting to different requirements and workflows.
-- **Enhance User Experience and Graphical Interface:** Improve the user interface and overall user experience to make interactions more intuitive and efficient.
-- **Enable Proactive Notifications:** Implement a proactive notification module based on the most critical components of each business.
-- **Decouple the Frontend from the Backend:** Separate the graphical interface from the backend to enhance flexibility and scalability.
-- **Expand Real-Time Data Capabilities:** Extend the ability to access real-time data not only from time-series databases but also by converting natural language questions into queries for relational databases.
-- **Maintain a Hybrid Model:** Provide the option to choose between using Azure OpenAI or leveraging the PHI-3 model and a vector database at the edge.
+- **Expand Cerebral for Multi-Industry and Multi-Role Use**: Make Cerebral capable of supporting various industries and roles, adapting to different requirements and workflows.
+- **Enhance User Experience and Graphical Interface**: Improve the user interface and overall user experience to make interactions more intuitive and efficient.
+- **Enable Proactive Notifications**: Implement a proactive notification module based on the most critical components of each business.
+- **Decouple the Frontend from the Backend**: Separate the graphical interface from the backend to enhance flexibility and scalability.
+- **Expand Real-Time Data Capabilities**: Extend the ability to access real-time data not only from time-series databases but also by converting natural language questions into queries for relational databases.
+- **Maintain a Hybrid Model**: Provide the option to choose between using Azure OpenAI or leveraging the PHI-3 model and a vector database at the edge.
+- **Automate Infrastructure Creation as Code**: Implement infrastructure automation using Bicep to streamline the deployment and management process, ensuring that all components are deployed efficiently and consistently across different environments.
 
 ## Cerebral Architecture Overview
 
