@@ -40,26 +40,45 @@ The architecture of Cerebral is designed to facilitate seamless integration and 
 
 ### Key Components
 
-1. **Cerebral Engine**: 
-   - **React JS Web Application**: Offers a user-friendly graphical interface that interacts with the backend.
-   - **REST API Query Processing Orchestrator**: Manages incoming queries and orchestrates data retrieval.
-   - **Proactive Recommendation and Alerts Engine**: Provides alerts and recommendations based on predefined rules or AI insights.
-   - **RAG (Retrieval Augmented Generation) at the Edge**: Uses Chroma vector databases and SLM/LLM models (such as Phi-3) to deliver intelligent responses.
-   - **Database Connectors**: Facilitates integration with different databases, including InfluxDB, MSSQL Lite, and custom solutions.
+### Key Components
 
-2. **Data Sources**:
-   - **InfluxDB**: Handles asset telemetry data, providing near real-time data insights.
-   - **SQLite**: Stores point-of-sale and inventory data, supporting relational queries.
-   - **Data Simulator**: Generates time-series and relational data for testing and simulation.
+1. **Cerebral Engine**: 
+   The Cerebral Engine is composed of several logical layers, each playing a vital role in the overall architecture. It integrates seamlessly with different components to provide a flexible and adaptive AI-driven experience. The web application is developed in **ReactJS**, allowing it to adapt to multiple scenarios and user requirements across various industries.
+
+   - **React JS Web Application**: This is the user interface layer that offers an intuitive and user-friendly graphical experience. It enables users to interact with Cerebral's capabilities, presenting data and insights in an accessible format. The use of ReactJS makes the application highly adaptable, capable of supporting various workflows and scenarios.
+
+   - **REST API Query Processing Orchestrator**: The REST API layer acts as the main communication hub, managing incoming queries and orchestrating data retrieval from multiple sources. It serves as a gateway that allows Cerebral’s functionalities to be accessed through REST APIs, providing the flexibility to embed Cerebral in different processes and making it agnostic to any graphical interface. This approach enables integration with other systems or applications, enhancing Cerebral's interoperability.
+
+   - **Proactive Recommendation and Alerts Engine**: This component provides proactive alerts and recommendations based on predefined rules or AI insights. It continuously monitors the conditions within databases and generates alerts for critical scenarios. Users can configure natural language questions that the engine converts into queries for time-series or relational databases, enabling analysis of the most critical aspects of their business. This ensures that users are always informed about potential issues or opportunities, helping them make data-driven decisions.
+
+   - **RAG (Retrieval Augmented Generation) at the Edge**: This module utilizes Chroma vector databases along with SLM/LLM models (such as Phi-3) to deliver intelligent responses. The design pattern of Retrieval Augmented Generation (RAG) allows users to work in environments with limited or no internet connectivity while still benefiting from AI capabilities. This enables the deployment of advanced generative AI models at the edge, ensuring low latency and minimal dependence on cloud connectivity.
+
+   - **Database Connectors**: The database connectors facilitate seamless integration with various databases, including InfluxDB, MSSQL Lite, and custom solutions. Cerebral's ability to convert natural language questions into database queries means that users can interact with their data in a more intuitive way. This allows non-technical users to extract insights from time-series or relational databases without needing to understand complex query languages.
+
+2. **Data Sources**: 
+   Cerebral’s REST API has the capability to analyze natural language questions posed by users and determine whether they relate to real-time data or document/manual-based information. When the question is identified as related to real-time data, the API consults the appropriate data sources, such as InfluxDB for time-series data or SQLite for relational data.
+
+   - **InfluxDB**: InfluxDB handles telemetry data from various assets, providing near real-time insights. This data source is ideal for monitoring sensor data, allowing users to keep track of asset conditions and operational metrics.
+
+   - **SQLite**: SQLite serves as the storage for point-of-sale (POS) and inventory data, enabling relational queries. This data source is critical for accessing structured data related to products, transactions, and inventory levels within a data warehouse.
+
+   - **Data Simulator**: The data simulator generates both time-series and relational data, providing a testing environment for the Cerebral system. This ensures that users can validate their use cases and workflows in a controlled setting before deploying the solution in a live environment.
 
 3. **Azure IoT Operations**: 
-   - Incorporates dataflow and MQTT brokers to collect and manage data from IoT devices.
+   Cerebral leverages the capabilities of Azure IoT Operations (AIO) to facilitate data communication and processing at the edge. It utilizes the MQTT broker as part of the logic for the Retrieval Augmented Generation (RAG) process, ensuring efficient data flow at the edge. Additionally, AIO's data flow connectors are employed to transmit data to Azure's data services.
 
-4. **Azure Cognitive Services & OpenAI**: 
-   - Offers speech-to-text capabilities and advanced AI-powered data contextualization and query classification.
+   - **MQTT Broker & Data Flow**: The MQTT broker collects and manages data from IoT devices, enabling seamless integration with edge-based systems. This enhances Cerebral’s ability to handle data from a wide range of industrial IoT sensors and devices, supporting real-time decision-making processes.
 
-5. **PowerBI Dashboards & Azure Data Factory**: 
-   - Enables data visualization and insights, making it easy to monitor key performance indicators.
+4. **Azure Cognitive Services & OpenAI**:
+   These services enhance Cerebral’s capabilities by providing advanced AI functionalities.
+
+   - **Speech-to-Text & AI-Powered Contextualization**: Azure Cognitive Services offer speech-to-text capabilities, enabling users to interact with Cerebral using voice commands. Additionally, Azure OpenAI provides AI-powered data contextualization and query classification, allowing users to ask complex questions in natural language and receive intelligent responses.
+
+5. **PowerBI Dashboards & Azure Data Factory**:
+   These components provide visualization and data orchestration capabilities that are essential for monitoring and analyzing business operations.
+
+   - **Data Visualization & Insights**: PowerBI Dashboards allow users to visualize data, making it easier to monitor key performance indicators (KPIs) and gain actionable insights. Azure Data Factory acts as the data orchestration service, enabling the movement and transformation of data from various sources into the dashboard for comprehensive analysis.
+
 
 ## Decision Tree Architecture
 
