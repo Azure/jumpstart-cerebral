@@ -5,11 +5,13 @@ import random
 from flask_cors import CORS
 from llm import LLM
 from InfluxDBHandler import InfluxDBHandler
+import logging
 
 app = Flask(__name__)
 
 llm = LLM()
 influx_handler = InfluxDBHandler()
+logger = logging.getLogger(__name__)
 
 api = Api(app, version='1.0', title='Cerebral API',
           description='Manage industries and roles in the Cerebral application.')
@@ -29,6 +31,7 @@ industries = [
 @ns.route('/api/get_industries' , methods=['GET'])
 class Industries(Resource):
     def get(self):
+        logger.info("Starting /api/get_industries")
         """Retrieve all available industries"""
         return industries, 200
 
