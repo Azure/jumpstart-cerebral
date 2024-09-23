@@ -109,32 +109,36 @@ Cerebral offers a versatile solution designed to support various roles:
 
 Cerebral’s multi-industry, multi-role capabilities make it a powerful assistant that integrates AI into day-to-day operations seamlessly.
 
-## Business Intelligence Data Pipeline Architecture
+## Business intelligence data pipeline architecture
 
 The Business Intelligence (BI) data pipeline in Cerebral is designed to provide comprehensive insights into sales, inventory management, and operational data across various retail locations. It integrates edge data processing with cloud-based analytics to deliver both real-time and historical insights for different roles, including local store managers, operations teams, business analysts, and accounting professionals.
 
-### Key Components and Flow
+### Key components and flow
 
-1. **Data Ingestion**:
+1. **Data Ingestion**
+
    - **Point-of-Sale (POS) System**: The POS system captures sales data, which is then ingested into the Cerebral data pipeline. This data provides valuable insights into sales performance, helping store managers monitor sales trends and inventory turnover.
    - **Warehouse Inventory Management**: Inventory tracking and management data from the warehouse are ingested into the Cerebral pipeline. This helps maintain accurate inventory levels, ensuring that stock is replenished in a timely manner.
 
-2. **Data Storage**:
+2. **Data Storage**
+
    - **SQLite Database**: The ingested data from both POS and inventory tracking systems is stored in an SQLite database running on a Kubernetes pod. This edge-located database includes:
-     - **POS Database**: Stores detailed sales transactions, allowing for real-time sales analysis.
-     - **Inventory Database**: Maintains data related to inventory levels, stock movements, and warehouse transactions.
+   - **POS Database**: Stores detailed sales transactions, allowing for real-time sales analysis.
+   - **Inventory Database**: Maintains data related to inventory levels, stock movements, and warehouse transactions.
 
-3. **Cerebral Integration**:
-   - The Cerebral engine processes data stored in the SQLite databases, enabling advanced analytics and generating insights based on sales, inventory, and operational metrics. This allows Cerebral to assist in decision-making and provide real-time recommendations to users.
+3. **Cerebral Integration**
+    The Cerebral engine processes data stored in the SQLite databases, enabling advanced analytics and generating insights based on sales, inventory, and operational metrics. This allows Cerebral to assist in decision-making and provide real-time recommendations to users.
 
-4. **Data Synchronization and Replication**:
+4. **Data Synchronization and Replication**
+
    - **Azure Data Factory**: There is an asynchronous replication of data from the edge-located SQLite database to Azure Data Factory. This process ensures that data from different locations (such as Toronto and Berlin stores) is consolidated and enriched in the cloud for broader analysis and reporting.
    - The consolidated data is made available for cloud-based analytics, providing a more comprehensive view of operations across multiple retail locations.
 
-5. **Data Visualization**:
+5. **Data Visualization**
+
    - **PowerBI Dashboards**: PowerBI is used to create both locally and remotely accessible dashboards:
-     - **Local Dashboards**: Store managers and operational technology (OT) personnel access real-time sales and inventory data through locally accessible dashboards.
-     - **Remote Dashboards**: Business analysts and accounting professionals can access consolidated BI dashboards through Azure Data Factory, providing deeper insights into overall business performance.
+   - **Local Dashboards**: Store managers and operational technology (OT) personnel access real-time sales and inventory data through locally accessible dashboards.
+   - **Remote Dashboards**: Business analysts and accounting professionals can access consolidated BI dashboards through Azure Data Factory, providing deeper insights into overall business performance.
 
 ### Benefits
 
@@ -146,8 +150,7 @@ This architecture ensures that Cerebral provides actionable insights, enabling u
 
 ![Data architecture](./img/data_architecture.png)
 
-> **Note:** For more information, please see the [Dashboards folder](./dashboards).
-
+> **Note:** For more information, please refer to the [dashboards folder](./dashboards).
 
 ## Getting started
 
@@ -158,9 +161,9 @@ Follow these steps to set up and use Cerebral in your environment:
 3. **Configure the Frontend**: Deploy the React JS web application and connect it to the backend using the provided APIs.
 4. **Enable Proactive Alerts**: Configure the proactive alert engine to monitor critical business components.
 
-## Prerequisites
+### Prerequisites
 
-Before deploying Cerebral, several pre-requisites must be fulfilled to ensure a successful installation and operation. The system is designed to run on both virtual machines and physical servers that can handle edge computing tasks effectively.
+Before deploying Cerebral, several prerequisites must be fulfilled to ensure a successful installation and operation. The system is designed to run on both virtual machines and physical servers that can handle edge computing tasks effectively.
 
 ### Hardware requirements
 
