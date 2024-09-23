@@ -16,11 +16,13 @@ Cerebral serves as the central intelligence engine that interacts with different
 
 - **Manufacturing (Tom)**: As an operations technician (OT), Tom benefits from Cerebral's ability to provide step-by-step troubleshooting guidance. Tom can consult Cerebral for documentation and even ask natural language questions to understand how to resolve complex problems, such as fixing an issue with a production machine or addressing food safety concerns. For example, if there's an electricity issue affecting the salmon production line, Cerebral helps guide Tom through the process of identifying and fixing the problem, reducing downtime and ensuring product quality.
 
+Watch our quick 3-minutes video:
+
 [![video](./img/video_thumbnail.png)](https://youtu.be/aVWu089dqdI)
 
 ### Key objectives
 
-The work done during the hackathon has focused on the following pillars:
+The work done during the Hackathon week has focused on the following pillars:
 
 - **Expand Cerebral for Multi-Industry and Multi-Role Use**: Make Cerebral capable of supporting various industries and roles, adapting to different requirements and workflows.
 - **Enhance User Experience and Graphical Interface**: Improve the user interface and overall user experience to make interactions more intuitive and efficient.
@@ -29,6 +31,8 @@ The work done during the hackathon has focused on the following pillars:
 - **Expand Real-Time Data Capabilities**: Extend the ability to access real-time data not only from time-series databases but also by converting natural language questions into queries for relational databases.
 - **Maintain a Hybrid Model**: Provide the option to choose between using Azure OpenAI or leveraging the PHI-3 model and a vector database at the edge.
 - **Automate Infrastructure Creation as Code**: Implement infrastructure automation using Bicep to streamline the deployment and management process, ensuring that all components are deployed efficiently and consistently across different environments.
+
+> **Note:** Cerebral is part of the Arc Jumpstart and a key component of future Jumpstart invesments. It's first implementation was showcased at the Microsoft Build 2004 conference as part of ["the Adaptive cloud approach: Build and scale apps from cloud to edge"](https://build.microsoft.com/sessions/0ac99196-8440-4117-84d4-a7c7181eeb73?source=sessions). An addtional reference implementation can be found in the form of a [Jumpstart Drop](https://azurearcjumpstart.com/cerebral_an_aidriven_assistant_for_industrial_efficiency) as team continues to invest in the solution development.
 
 ## Cerebral architecture overview
 
