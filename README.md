@@ -1,8 +1,8 @@
-# Cerebral – Micorosoft Global Hackathon 2024
+# Cerebral – Microsoft Global Hackathon 2024
 
 ## Introduction
 
-The "Cerebral" Micorosoft Global Hackathon 2024 team has laid the foundation for the next generation of the Cerebral solution, an intelligent assistant at the edge that utilizes Generative AI and various [Adaptive cloud approach](https://azure.microsoft.com/blog/advancing-hybrid-cloud-to-adaptive-cloud-with-azure/) and services. This innovative solution is designed to simplify tasks for different roles across industries such as Retail, Logistics, and Manufacturing.
+The "Cerebral" Microsoft Global Hackathon 2024 team has laid the foundation for the next generation of the Cerebral solution, an intelligent assistant at the edge that utilizes Generative AI and various [Adaptive cloud approach](https://azure.microsoft.com/blog/advancing-hybrid-cloud-to-adaptive-cloud-with-azure/) and services. This innovative solution is designed to simplify tasks for different roles across industries such as Retail, Logistics, and Manufacturing.
 
 ### Demo overview
 
@@ -32,7 +32,7 @@ The work done during the Hackathon week has focused on the following pillars:
 - **Maintain a Hybrid Model**: Provide the option to choose between using Azure OpenAI or leveraging the PHI-3 model and a vector database at the edge.
 - **Automate Infrastructure Creation as Code**: Implement infrastructure automation using Bicep to streamline the deployment and management process, ensuring that all components are deployed efficiently and consistently across different environments.
 
-> **Note:** Cerebral is part of the Arc Jumpstart and a key component of future Jumpstart invesments. It's first implementation was showcased at the Microsoft Build 2004 conference as part of ["the Adaptive cloud approach: Build and scale apps from cloud to edge"](https://build.microsoft.com/sessions/0ac99196-8440-4117-84d4-a7c7181eeb73?source=sessions). An addtional reference implementation can be found in the form of a [Jumpstart Drop](https://azurearcjumpstart.com/cerebral_an_aidriven_assistant_for_industrial_efficiency) as team continues to invest in the solution development.
+> **Note:** Cerebral is part of the [Arc Jumpstart](https://aka.ms/ArcJumpstart) program and a key component of future Jumpstart product investments. It's first implementation was showcased at the Microsoft Build 2004 conference as part of ["the Adaptive cloud approach: Build and scale apps from cloud to edge"](https://build.microsoft.com/sessions/0ac99196-8440-4117-84d4-a7c7181eeb73?source=sessions). An additional reference implementation can be found in the form of a [Jumpstart Drop](https://azurearcjumpstart.com/cerebral_an_aidriven_assistant_for_industrial_efficiency) as team continues to invest in the solution development.
 
 ## Cerebral architecture overview
 
@@ -90,7 +90,7 @@ The decision tree architecture of Cerebral illustrates how different data types 
 Cerebral uses a bi-directional query workflow to handle various use cases:
 
 - **Proactive Alerts**: Triggers alerts based on inventory shortages, operational outages, or equipment state.
-- **Work Item Prepopulation**: Assists in creating work orders or maintenance requests.
+- **Work Item Pre-population**: Assists in creating work orders or maintenance requests.
 - **Error Summarization**: Provides summaries of operational errors and suggests troubleshooting steps.
 
 Queries are classified into three main types:
@@ -154,7 +154,7 @@ For the data plane, which handles the direct processing and movement of operatio
 
 - **Port 443 (HTTPS)**: This port is used predominantly to secure data transmission across the network, ensuring encrypted communication for all data exchanges between the edge devices and the centralized data services.
 
-## Deployemnt steps
+## Deployment steps
 
 ### Step 1 - Building an Ubuntu VM running Azure IoT Operations
 
@@ -402,7 +402,7 @@ http://localhost:5003
 
 ![Cerebral Rest API](./img/swagger.png)
 
-### Note on deployment yypes
+### Note on deployment types
 
 - **Cloud-Based LLM Deployment**: This setup requires minimal resources at the Edge and leverages Azure's robust cloud capabilities for processing and data handling, suitable for scenarios with adequate network connectivity and less stringent data locality requirements.
 
