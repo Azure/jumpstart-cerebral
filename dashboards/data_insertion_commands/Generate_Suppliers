@@ -1,0 +1,9 @@
+INSERT INTO Suppliers (SupplierID, SupplierName, ContactName, PhoneNumber, Email, DeliveryLeadTimeDays) VALUES
+(1, 'Fresh Farms', 'John Doe', '123-456-7890', 'john@freshfarms.com', 3),
+(2, 'Bakery Bliss', 'Jane Smith', '234-567-8901', 'jane@bakerybliss.com', 5),
+(3, 'Dairy Delight', 'Sam Brown', '345-678-9012', 'sam@dairydelight.com', 7),
+(4, 'Meat Masters', 'Emily Davis', '456-789-0123', 'emily@meatmasters.com', 14),
+(5, 'Grocery Giant', 'Michael Lee', '567-890-1234', 'michael@grocerygiant.com', 2),
+(6, 'Pasta Perfection', 'Anna Wilson', '678-901-2345', 'anna@pastaperfection.com', 10),
+(7, 'Juice Junction', 'Chris Evans', '789-012-3456', 'chris@juicejunction.com', 6),
+(8, 'Rice Right', 'Rachel Green', '890-123-4567', 'rachel@riceright.com', 5);

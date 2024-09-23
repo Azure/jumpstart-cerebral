@@ -1,0 +1,2 @@
+INSERT INTO StoreInventory (StoreID, StoreName, Address, City, StateCode, Zipcode) VALUES
+(1, "Contoso MegaMart", "1 Way", "Redmond", 'WA', 55555)
