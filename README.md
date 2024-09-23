@@ -362,7 +362,7 @@ To access to Grafana use the `admin` and the password of `ArcPassword123!!`
 kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/redis.yaml
 ```
 
-#### Deploy the Cerebral application:**
+#### Deploy the Cerebral application
 
 - Create an Azure OpenAI service in your subscription and obtain the key and endpoint for use in the application configuration.
 
