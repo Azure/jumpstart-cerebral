@@ -146,7 +146,7 @@ This architecture ensures that Cerebral provides actionable insights, enabling u
 
 ![Data architecture](./img/data_architecture.png)
 
-> **Note:** For more information, please see the [Dashboards folder](./dashboard).
+> **Note:** For more information, please see the [Dashboards folder](./dashboards).
 
 
 ## Getting started
