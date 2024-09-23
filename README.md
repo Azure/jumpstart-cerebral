@@ -298,13 +298,13 @@ For the data plane, which handles the direct processing and movement of operatio
 2. **Access InfluxDB:**
    - Use a web browser to connect to the Server IP of the InfluxDB service to access its interface, example htttp://<IP Server>:8086. Validate that there is a bucket named `manufacturing` and that it contains a measurement called `assemblyline` with values. To access to Grafana the user is **admin** and the password id **ArcPassword123!!**
 
-      ![Grafana](./resources/images/grafana.png)
+      ![Grafana](./img/grafana.png)
 
 
 3. **Install Redis:**
    - Deploy Redis to store user sessions and conversation history:
      ```bash
-     kubectl apply -f https://raw.githubusercontent.com/Azure/arc_jumpstart_drops/main/sample_app/cerebral_genai/deployment/redis.yaml
+     kubectl apply -f https://raw.githubusercontent.com/Azure/jumpstart-cerebral/refs/heads/main/deployment/redis.yaml
      ```
 
 4. **Deploy Cerebral Application:**
@@ -324,6 +324,18 @@ For the data plane, which handles the direct processing and movement of operatio
 
 5. **Verify All Components:**
    - Ensure that all components are functioning correctly by checking the pods and services.
+
+## Testing Cerebral
+
+At this point in the setup, "Cerebral" is fully operational using only Azure Open AI for processing queries. Here are the steps to test the functionality of the system:
+
+1. **Accessing the Web Interface swagger**:
+   - Open your web browser and navigate to the web address of your server appended with port 5003. For example, if you are running the server locally, you would go to:
+     ```
+     http://localhost:5003
+     ```
+
+     ![Cerebral Rest API](./img/swagger.png)
 
 
 ### Note on Deployment Types
