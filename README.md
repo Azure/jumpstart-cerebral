@@ -230,6 +230,8 @@ az group create -n Cerebral -l eastus2
 az deployment group create -g Cerebral -f main.bicep -p main.bicepparam
 ```
 
+- Once the deployment is complete, SSH into the created virtual machine and continue to the next step.
+
 ### Step 2 - Install Cerebral
 
 #### Deploy Namespace, InfluxDB, Simulator, and Redis
