@@ -6,7 +6,7 @@ The "Cerebral" Micorosoft Global Hackathon 2024 team has laid the foundation for
 
 ### Demo overview
 
-In this [presented demo video recording](https://youtu.be/aVWu089dqdI), Cerebral serves as the central intelligence engine that interacts with different personas, showcasing how it assists in various scenarios:
+Cerebral serves as the central intelligence engine that interacts with different personas, showcasing how it assists in various scenarios. By integrating seamlessly across different roles, Cerebral demonstrates its multi-industry, multi-role capabilities, making it a powerful AI assistant for enhancing operational workflows, decision-making processes, and cross-functional collaboration in diverse industries.
 
 ![Meet the team](./img/meet_team.png)
 
@@ -16,7 +16,7 @@ In this [presented demo video recording](https://youtu.be/aVWu089dqdI), Cerebral
 
 - **Manufacturing (Tom)**: As an operations technician (OT), Tom benefits from Cerebral's ability to provide step-by-step troubleshooting guidance. Tom can consult Cerebral for documentation and even ask natural language questions to understand how to resolve complex problems, such as fixing an issue with a production machine or addressing food safety concerns. For example, if there's an electricity issue affecting the salmon production line, Cerebral helps guide Tom through the process of identifying and fixing the problem, reducing downtime and ensuring product quality.
 
-By integrating seamlessly across different roles, Cerebral demonstrates its multi-industry, multi-role capabilities, making it a powerful AI assistant for enhancing operational workflows, decision-making processes, and cross-functional collaboration in diverse industries.
+[![video](./img/video_thumbnail.png)](https://youtu.be/aVWu089dqdI)
 
 ### Key objectives
 
