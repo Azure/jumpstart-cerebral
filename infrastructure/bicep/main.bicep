@@ -31,7 +31,7 @@ param githubAccount string = 'Azure'
 param githubBranch string = 'main'
 
 @description('Choice to deploy Bastion to connect to the client VM')
-param deployBastion bool = false
+param deployBastion bool = true
 
 @description('Bastion host Sku name. The Developer SKU is currently supported in a limited number of regions: https://learn.microsoft.com/azure/bastion/quickstart-developer-sku')
 @allowed([
@@ -48,8 +48,6 @@ param acrName string = 'crbrlacr${namingGuid}'
 
 var templateBaseUrl = 'https://raw.githubusercontent.com/${githubAccount}/jumpstart-cerebral/${githubBranch}/'
 var k3sArcClusterName = '${namingPrefix}-K3s-${guid}'
-var k3sClusterNodesCount = 3 // Number of nodes to deploy in the K3s cluster
-
 
 module ubuntuRancherK3sDeployment 'kubernetes/ubuntuRancher.bicep' = {
   name: 'ubuntuRancherK3sDeployment'
@@ -65,24 +63,6 @@ module ubuntuRancherK3sDeployment 'kubernetes/ubuntuRancher.bicep' = {
     namingPrefix: namingPrefix
   }
 }
-
-module ubuntuRancherK3sNodesDeployment 'kubernetes/ubuntuRancherNodes.bicep' = [for i in range(0, k3sClusterNodesCount): {
-  name: 'ubuntuRancherK3sNodesDeployment-${i}'
-  params: {
-    sshRSAPublicKey: sshRSAPublicKey
-    stagingStorageAccountName: toLower(stagingStorageAccountDeployment.outputs.storageAccountName)
-    logAnalyticsWorkspace: logAnalyticsWorkspaceName
-    templateBaseUrl: templateBaseUrl
-    subnetId: mgmtArtifactsAndPolicyDeployment.outputs.subnetId
-    azureLocation: location
-    vmName : '${k3sArcClusterName}-Node-0${i}'
-    storageContainerName: toLower(k3sArcClusterName)
-    namingPrefix: namingPrefix
-  }
-  dependsOn: [
-    ubuntuRancherK3sDeployment
-  ]
-}]
 
 module stagingStorageAccountDeployment 'mgmt/mgmtStagingStorage.bicep' = {
   name: 'stagingStorageAccountDeployment'

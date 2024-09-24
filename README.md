@@ -199,144 +199,42 @@ For the data plane, which handles the direct processing and movement of operatio
 
 ## Deployment steps
 
-### Step 1 - Building an Ubuntu VM running Azure IoT Operations
+### Step 1 - Deploy the example infrastructure
 
-#### Prepare your Azure Arc-enabled Kubernetes cluster on Ubuntu
+#### Get the infrastructure as code
 
-- Install `curl`:
-
-```bash
-sudo apt install curl -y
-```
-
-- Install Azure CLI:
+- Clone the repo with the Infrastructure as Code
 
 ```bash
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+git clone https://github.com/Azure/jumpstart-cerebral
 ```
 
-- Install Azure IoT Operations cluster extension:
-  
-```bash
-az extension add --upgrade --name azure-iot-ops
-```
-
-- Install Rancher K3s:
+- Navigate to the correct folder.
 
 ```bash
-curl -sfL https://get.k3s.io | sh –
+cd jumpstart-cerebral/infrastructure/bicep
 ```
 
-#### Setup K3s configuration
-
-- Create K3s configuration:
+- Edit the sample main.bicepparam file with values for your environment, providing a public SSH key,.name for a log analytics workspace, and option to deploy Azure Bastion.
 
 ```bash
-mkdir ~/.kube
-sudo KUBECONFIG=~/.kube/config:/etc/rancher/k3s/k3s.yaml kubectl config view --flatten > ~/.kube/merged
-mv ~/.kube/merged ~/.kube/config
-chmod  0600 ~/.kube/config
-export KUBECONFIG=~/.kube/config
-kubectl config use-context default
+nano main.bicepparam
 ```
 
-- Increase user watch/instance limits:
+#### Deploy the infrastructure as code
+
+- From the same folder, run the following command to deploy the code.
 
 ```bash
-echo fs.inotify.max_user_instances=8192 | sudo tee -a /etc/sysctl.conf
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+az group create -n Cerebral -l eastus2
+az deployment group create -g Cerebral -f main.bicep -p main.bicepparam
 ```
 
-- Increase file descriptor limit:
-
-```bash
-echo fs.file-max = 100000 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
-```
-
-#### Connect your cluster to Azure Arc
-
-- Login to Azure:
-
-```bash
-az login
-```
-
-- Set environment variables:
-  
-```bash
-export SUBSCRIPTION_ID=<YOUR_SUBSCRIPTION_ID>
-export LOCATION=<YOUR_REGION>
-export RESOURCE_GROUP=<YOUR_RESOURCE_GROUP>
-export CLUSTER_NAME=<YOUR_CLUSTER_NAME>
-export KV_NAME=<YOUR_KEY_VAULT_NAME>
-export INSTANCE_NAME=<YOUR_INSTANCE_NAME>
-```
-
-- Set Azure subscription context:
-
-```bash
-az account set -s $SUBSCRIPTION_ID
-```
-
-- Register required resource providers:
-  
-```bash
-az provider register -n "Microsoft.ExtendedLocation"
-az provider register -n "Microsoft.Kubernetes"
-az provider register -n "Microsoft.KubernetesConfiguration"
-az provider register -n "Microsoft.IoTOperationsOrchestrator"
-az provider register -n "Microsoft.IoTOperations"
-az provider register -n "Microsoft.DeviceRegistry"
-```
-
-- Create a resource group:
-
-```bash
-az group create --location $LOCATION --resource-group $RESOURCE_GROUP --subscription $SUBSCRIPTION_ID
-```
-
-- Connect Kubernetes cluster to Azure Arc:
-
-```bash
-az connectedk8s connect -n $CLUSTER_NAME -l $LOCATION -g $RESOURCE_GROUP --subscription $SUBSCRIPTION_ID
-```
-
-- Get `objectId` of Microsoft Entra ID application:
-
-```bash
-export OBJECT_ID=$(az ad sp show --id bc313c14-388c-4e7d-a58e-70017303ee3b --query id -o tsv)
-```
-
-- Enable custom location support:
-
-```bash
-az connectedk8s enable-features -n $CLUSTER_NAME -g $RESOURCE_GROUP --custom-locations-oid $OBJECT_ID --features cluster-connect custom-locations
-```
-
-- Verify cluster readiness for Azure IoT Operations:
-
-```bash
-az iot ops verify-host
-```
-
-- Create an Azure Key Vault:
-
-```bash
-az keyvault create --enable-rbac-authorization false --name $KV_NAME --resource-group $RESOURCE_GROUP
-```
+- Once the deployment is complete, SSH into the created virtual machine and continue to the next step.
 
 ### Step 2 - Install Cerebral
 
 #### Deploy Namespace, InfluxDB, Simulator, and Redis
-
-- Create a folder for Cerebral configuration files:
-
-```bash
-mkdir cerebral
-cd cerebral
-```
 
 - Apply the Cerebral namespace:
 
